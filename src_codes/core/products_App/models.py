@@ -46,7 +46,7 @@ class Products(models.Model):
         return '{} {}'.format(self.product_tag, self.name)
 
 
-class Cart(models.Model):
+class Order(models.Model):
     """_summary_
 
     Args:
@@ -55,13 +55,15 @@ class Cart(models.Model):
     Returns:
         _type_: _description_
     """
-    cart_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    Order_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    user = models.ForeignKey(CustomUser, related_name='orders', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     products = models.ManyToManyField(Products)
+    
 
     class Meta:
-        ordering = ['cart_id', '-created_at']
+        ordering = ['Order_id', '-created_at']
         
 
     def __str__(self):
-        return f'{self.cart_id}'
+        return f'{self.Order_id}'
