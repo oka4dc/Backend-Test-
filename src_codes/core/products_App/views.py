@@ -3,10 +3,11 @@ from products_App.models import Category, Products
 from rest_framework import status
 from rest_framework.views import APIView
 from products_App.serializers import CartegorySerializers,ProductSerializers
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets
+from django_filters.rest_framework.filters import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from products_App.pagination import CustomPagination
 # Create your views here.
 
 class productCreateRetreiveAll(APIView):
@@ -16,15 +17,16 @@ class productCreateRetreiveAll(APIView):
         APIView (_type_): _description_
     """
     def post (self, request):
-        serializer = ProductSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        serializer_class = ProductSerializers(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response(data=serializer_class.data, status=status.HTTP_201_CREATED)
     
     def get(self, request):
         user = Products.objects.all()
-        serializer = ProductSerializers(user, many = True)
-        return Response(data=serializer.data, status= status.HTTP_200_OK)
+        serializer_class = ProductSerializers(user, many = True)
+        pagination_class = CustomPagination
+        return Response(data=serializer_class.data, status= status.HTTP_200_OK)
     
 class ProductDetail(APIView):
     """Retrieve, update or delete a product from the database
@@ -56,6 +58,13 @@ class ProductDetail(APIView):
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)        
 
+class ProductSearch(viewsets.ModelViewSet):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializers
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['category']
+    search_fields = ['Product_Name', 'Price']
+    
 class CatergoryCreateRetreiveAll(APIView):
     """Create and get all products
 
