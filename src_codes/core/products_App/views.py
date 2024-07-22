@@ -2,12 +2,12 @@ from django.shortcuts import render
 from products_App.models import Order, Category, Products
 from rest_framework import status
 from rest_framework.views import APIView
-from products_App.serializers import CartegorySerializers, ProductSerializers, OrderSerializers
+from products_App.serializers import CartegorySerializers,ProductSerializers, OrderSerializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
-# Create your views here.
 from rest_framework.response import Response
-
+from rest_framework import viewsets
+# Create your views here.
 
 class productCreateRetreiveAll(APIView):
     """Create and get all products
@@ -103,12 +103,25 @@ class CatergoryDetail(APIView):
         product_cart.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)        
 
-class Order(APIView):
-    """_summary_
+"""
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-    Args:
-        APIView (_type_): _description_
-    """
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+"""
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializers
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
     def place_order(self, request):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -121,6 +134,5 @@ class Order(APIView):
         orders = Order.objects.filter(user=request.user)
         serializer = self.get_serializer(orders, many=True)
         return Response(serializer.data)
-
 
 
