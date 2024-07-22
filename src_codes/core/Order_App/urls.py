@@ -1,4 +1,4 @@
-from products_App.views import OrderViewSet
+from Order_App.views import OrderViewSet
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 

@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     #third party apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
     
     #user defined apps
     'User_App',
-    'products_App'
+    'products_App',
+    'Order_App'
     
 ]
 

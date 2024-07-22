@@ -1,5 +1,6 @@
 from django.db import models
-
+from User_App.models import CustomUser
+from products_App.models import Products
 # Create your models here.
 class Order(models.Model):
     """_summary_

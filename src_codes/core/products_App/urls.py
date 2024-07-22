@@ -1,7 +1,5 @@
-from django.urls import path
-from products_App.views import productCreateRetreiveAll, ProductDetail
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from products_App.views import productCreateRetreiveAll, ProductDetail
 
 urlpatterns = [
     path('CreateProduct/', productCreateRetreiveAll.as_view(), name='CreateProduct'),
