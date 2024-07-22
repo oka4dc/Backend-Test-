@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from products_App.models import Order, Category, Products
+from products_App.models import Category, Products
 from rest_framework import status
 from rest_framework.views import APIView
-from products_App.serializers import CartegorySerializers,ProductSerializers, OrderSerializers
+from products_App.serializers import CartegorySerializers,ProductSerializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -102,37 +102,4 @@ class CatergoryDetail(APIView):
         product_cart = self.get_object(pk)
         product_cart.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)        
-
-"""
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-"""
-
-class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializers
-    permission_classes = [IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
-    def place_order(self, request):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
-    def order_history(self, request):
-        orders = Order.objects.filter(user=request.user)
-        serializer = self.get_serializer(orders, many=True)
-        return Response(serializer.data)
-
 

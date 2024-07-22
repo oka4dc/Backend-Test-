@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from products_App.models import Products, Order, Category
+from products_App.models import Products, Category
 
 
 class ProductSerializers(serializers.ModelSerializer):
@@ -22,20 +22,6 @@ class ProductSerializers(serializers.ModelSerializer):
             "Date_created"
         ]
 
-class OrderSerializers(serializers.ModelSerializer):
-    """_summary_
-
-    Args:
-        serializers (_type_): _description_
-    """
-    class Meta:
-        model =Order 
-        fields =[
-            "Order_id",
-            "user",
-            "created_at",
-            "products"
-        ]
     
 class CartegorySerializers(serializers.ModelSerializer):
     """_summary_
