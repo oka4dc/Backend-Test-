@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from products_App.serializers import CartegorySerializers,ProductSerializers
 from rest_framework.response import Response
 from rest_framework import viewsets
-from django_filters.rest_framework.filters import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from products_App.pagination import CustomPagination
 # Create your views here.
