@@ -10,12 +10,17 @@ from rest_framework.filters import SearchFilter
 from products_App.pagination import CustomPagination
 # Create your views here.
 
-class productCreateRetreiveAll(APIView):
-    """Create and get all products
 
-    Args:
-        APIView (_type_): _description_
-    """
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializers
+    
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CartegorySerializers
+"""
+class productCreateRetreiveAll(APIView):
+    
     def post (self, request):
         serializer_class = ProductSerializers(data=request.data)
         if serializer_class.is_valid():
@@ -29,11 +34,7 @@ class productCreateRetreiveAll(APIView):
         return Response(data=serializer_class.data, status= status.HTTP_200_OK)
     
 class ProductDetail(APIView):
-    """Retrieve, update or delete a product from the database
-
-    Args:
-        APIView (_type_): _description_
-    """
+    
     def get_object(self, pk):
         try:
             return Products.objects.get(pk=pk)
@@ -57,6 +58,7 @@ class ProductDetail(APIView):
         product = self.get_object(pk)
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)        
+"""
 
 class ProductSearch(viewsets.ModelViewSet):
     queryset = Products.objects.all()

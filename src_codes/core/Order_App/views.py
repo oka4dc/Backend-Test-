@@ -8,7 +8,6 @@ from rest_framework import viewsets
 from Order_App.serializers import OrderSerializers
 
 # Create your views here.
-
 """
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()

@@ -10,17 +10,7 @@ class ProductSerializers(serializers.ModelSerializer):
     """
     class Meta:
         model =Products
-        fields =[
-            "Product_id"
-            "Product_Name",
-            "Category",
-            "Price",
-            "Stock",
-            "imageUrl",
-            "Created_by",
-            "Status",
-            "Date_created"
-        ]
+        fields ='__all__'
 
     
 class CartegorySerializers(serializers.ModelSerializer):

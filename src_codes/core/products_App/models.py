@@ -30,7 +30,7 @@ class Products(models.Model):
         _type_: _description_
     """
     Product_id = models.CharField(max_length=10)
-    Product_Name = models.CharField(max_length=100)
+    Name = models.CharField(max_length=100)
     Category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     Price = models.IntegerField()
     Stock = models.IntegerField()
