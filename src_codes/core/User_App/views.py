@@ -17,6 +17,18 @@ class RegisterView(generics.CreateAPIView):
     
 class LoginView(APIView):
     serializer_class = LoginSerializer
+    
+    @swagger_auto_schema(
+        operation_description="Login User",
+        request_body=LoginSerializer,
+        responses={200: LoginSerializer},
+        examples={
+            "application/json": {
+                "email": "example@gmail",
+                "password": "mypassword"
+            }
+        } 
+        )
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -34,7 +46,9 @@ class LoginView(APIView):
             })
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
+        
 class LogoutView(APIView):
+    
     def post(self, request, *args, **kwargs):
         try:
             refresh_token = request.data["refresh"]
