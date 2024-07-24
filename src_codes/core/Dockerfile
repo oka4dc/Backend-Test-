@@ -1,4 +1,4 @@
-# Use the official Python image.
+# Using the official Python image on dockerhub.
 FROM python:3.9-slim
 
 # Set environment variables
